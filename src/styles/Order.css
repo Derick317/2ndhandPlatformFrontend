@@ -1,0 +1,24 @@
+.orders-main {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+.order-card-image {
+    float: right;
+}
+
+.order-card-title {
+    font-weight: bold;
+    font-size: large;
+}
+
+.order-card-price {
+    margin-top: 40px;
+    font-weight: 600;
+}
+
+.order-card-button {
+    width: max(100px, 100%);
+    margin-bottom: 20px;
+}

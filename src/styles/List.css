@@ -1,0 +1,19 @@
+.list-main {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+.list-card-image {
+    float: right;
+}
+
+.list-card-title {
+    font-weight: bold;
+    font-size: large;
+}
+
+.list-card-price {
+    margin-top: 40px;
+    font-weight: 600;
+}

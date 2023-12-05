@@ -1,0 +1,30 @@
+.item-main {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 50px;
+}
+
+.item-img-card {
+    width: 80%;
+    margin:0 auto;
+}
+
+.item-title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.item-price {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.item-description {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.item-button {
+    margin-top: 20px;
+}

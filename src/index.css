@@ -1,6 +1,10 @@
 @import "styles/Main.css";
 @import "styles/TopBar.css";
 @import "styles/login.css";
+@import "styles/List.css";
+@import "styles/Upload.css";
+@import "styles/Item.css";
+@import "styles/Order.css";
 
 body {
   margin: 0;

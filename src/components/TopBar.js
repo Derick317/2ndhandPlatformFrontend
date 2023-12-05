@@ -1,34 +1,40 @@
 import React from 'react';
-import logo from "../logo.svg";
+import { Link } from "react-router-dom";
+import logo from "../icons/logo.svg";
 import SearchBar from './SearchBar';
-import LoginModal from './login';
 
 import { UserOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { APP_NAME } from '../constants';
 
 function TopBar(props) {
-    const { isLoggedIn, userName, handleLoggedIn, handleLogout } = props;
-    const [openLoginModal, setOpenLoginModal] = React.useState(false)
+    const { theme, isLoggedIn, userName, setOpenLoginModal, handleLogout } = props;
+    
     const items = [
         {
-            key: '1',
             label: (
-                <span onClick={() => handleLogout()}>Sign out</span>
+                <a href='/list'>My List</a>
             ),
         },
         {
-            key: '4',
-            danger: true,
-            label: 'a danger item',
+            label: (
+                <a href='/orders'>My Orders</a>
+            ),
         },
+        {
+            label: (
+                <span onClick={() => handleLogout()}>Sign out</span>
+            ),
+        }
     ];
     return (
         <>
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <span className="App-title">{APP_NAME}</span>
-                <SearchBar colorPrimary='#EBC061'></SearchBar>
+                <Link to="/home">
+                    <img src={logo} className="App-logo" alt="logo"/>
+                </Link>
+                <Link className="App-title" to='/home'>{APP_NAME}</Link>
+                <SearchBar theme={theme}></SearchBar>
                 {
                     isLoggedIn ?
                         <Dropdown
@@ -36,21 +42,15 @@ function TopBar(props) {
                                 items,
                             }}
                         >
-                            <a onClick={(e) => e.preventDefault()}>
-                            <span className='login-user'>&ensp;{userName}&ensp;</span>
-                            </a>
+                            <span onClick={(e) => e.preventDefault()} className='login-user'>
+                                &ensp;{userName}&ensp;
+                            </span>
                         </Dropdown> :
                         <span className='login-user' onClick={() => setOpenLoginModal(true)}>
                             &ensp;<UserOutlined />&ensp;Sign in&ensp;
                         </span>
                 }
             </header>
-            <LoginModal 
-                open={openLoginModal} 
-                setOpen={setOpenLoginModal}
-                handleLoggedIn={handleLoggedIn}
-                colorPrimary='#EBC061'
-            />
         </>
     );
 }

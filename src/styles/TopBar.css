@@ -24,6 +24,8 @@
   margin-right: 20px;
   font-weight: bold;
   font-size: var(--font-size);
+  text-decoration: none;
+  color: white;
   white-space: nowrap; /* Do not wrap as the window shrinks */
 }
 

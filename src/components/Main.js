@@ -1,24 +1,28 @@
+import { Routes, Route, Navigate } from 'react-router';
+
+import Upload from "./Upload";
+import Orders from "./Orders";
+import Home from "./Home";
+import List from "./List"
+import Item from './Item';
+
 function Main(props) {
-    return <div className="main">
-        main
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-        <p>5</p>
-        <p>6</p>
-        <p>7</p>
-        <p>8</p>
-        <p>9</p>
-        <p>20</p>
-        <p>21</p>
-        <p>22</p>
-        <p>23</p>
-        <p>24</p>
-        <p>25</p>
-        <p>26</p>
-        <p>27</p>
-    </div>
+    const { theme, isLoggedIn, needLogin } = props;
+    const loggedInOrHome = (obj) => {
+        return isLoggedIn ? obj : <Navigate to='/home'/>
+    }
+    return (
+        <div className="main">
+            <Routes>
+                <Route path="/" exact element={<Home/>} />
+                <Route path="/upload" element={loggedInOrHome(<Upload theme={theme}/>)}/>
+                <Route path="/list" element={loggedInOrHome(<List theme={theme}/>)}/> 
+                <Route path="/orders" element={loggedInOrHome(<Orders theme={theme}/>)} />
+                <Route path="/home" element={<Home/>} />
+                <Route path="/item/:id" element={<Item theme={theme} needLogin={needLogin}/>}/>
+            </Routes>
+        </div>
+    );
 }
 
 export default Main;

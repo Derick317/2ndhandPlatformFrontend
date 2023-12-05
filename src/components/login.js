@@ -24,7 +24,7 @@ function LoginModal(props) {
             .then((res) => {
                 if (res.status === 200) {
                     const { data } = res;
-                    props.handleLoggedIn(data.token, data.username);
+                    props.handleLoggedIn(data.token, data.username, data.id);
                     message.success("Login succeed! ");
                     props.setOpen(false)
                 }
@@ -40,7 +40,7 @@ function LoginModal(props) {
 
     const onSignupFinish = (values) => {
         const { username, email, password, reEnterPassword } = values;
-        if (reEnterPassword != password) {
+        if (reEnterPassword !== password) {
             setPasswordMatch(false);
             return;
         }
@@ -192,13 +192,7 @@ function LoginModal(props) {
                 props.setOpen(false)
             }}
         >
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: props.colorPrimary,
-                    },
-                }}
-            >
+            <ConfigProvider theme={props.theme}>
                 {login ? loginForm : signupForm}
             </ConfigProvider>
         </Modal>
