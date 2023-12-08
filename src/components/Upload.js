@@ -10,7 +10,6 @@ import axios from "axios";
 import { BASE_URL, TOKEN_KEY, TAGS } from "../constants";
 
 const normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
     }
@@ -46,12 +45,9 @@ function Upload(props) {
         if (!isLt2M) {
             message.error('Image must smaller than 2MB!');
         }
-        console.log("imageList.length");
         if (isLt2M && isJpgOrPng) {
-            console.log("Add");
             setImageList([...imageList, newFile]);
         }
-        console.log(imageList.length)
     };
 
     const beforeImageUpload = (file) => {
@@ -63,7 +59,6 @@ function Upload(props) {
         if (!isLt2M) {
             message.error('Image must smaller than 2MB!');
         }
-        console.log(imageList.length)
         return false || Upload.LIST_IGNORE;
     }
 

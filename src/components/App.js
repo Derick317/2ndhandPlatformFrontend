@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import Main from "./Main"
 import LoginModal from './login';
@@ -6,17 +6,24 @@ import LoginModal from './login';
 import { TOKEN_KEY, USERNAME_KEY, ID_KEY } from "../constants";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem(TOKEN_KEY) ? true : false
-    // true
-  );
-  const [userName, setUserName] = useState(localStorage.getItem(USERNAME_KEY))
-  const [openLoginModal, setOpenLoginModal] = React.useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem(TOKEN_KEY) ? true : false);
+  const [userName, setUserName] = useState(localStorage.getItem(USERNAME_KEY));
+  const [openLoginModal, setOpenLoginModal] = React.useState(false);
+  const [scrollWidth, setScrollWidth] = useState(document.documentElement.scrollWidth);
   const theme = {
     token: {
       colorPrimary: '#EBC061',
     },
-  }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleScrollWidth);
+    return () => {window.removeEventListener('resize', handleScrollWidth);}
+  }, []);
+
+  const handleScrollWidth = () => {
+    setScrollWidth(document.documentElement.scrollWidth);
+  };
 
   const logout = () => {
     console.log("log out");
@@ -48,7 +55,12 @@ function App() {
         setOpenLoginModal={setOpenLoginModal}
         handleLogout={logout}
       />
-      <Main theme={theme} isLoggedIn={isLoggedIn} needLogin={needLogin} />
+      <Main
+        theme={theme}
+        isLoggedIn={isLoggedIn}
+        needLogin={needLogin}
+        scrollWidth={scrollWidth}
+      />
       <LoginModal
         theme={theme}
         open={openLoginModal}

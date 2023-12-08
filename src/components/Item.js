@@ -1,10 +1,10 @@
-import { Button, ConfigProvider, Card, Row, Col, message, Tag } from "antd";
+import { Button, ConfigProvider, Card, Row, Col, message, Image, Empty } from "antd";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import dinosaur from "../dinosaur.png"
+import imgPlaceholder from "../icons/image-outline-icon.svg"
 
-import { BASE_URL, BUCKET_NAME, ID_KEY, TOKEN_KEY } from "../constants";
+import { BASE_URL, ID_KEY, TOKEN_KEY } from "../constants";
 function Item(props) {
     const params = useParams()
     const [item, setItem] = useState({})
@@ -25,7 +25,7 @@ function Item(props) {
             console.log("query item failed: ", err.message);
             message.error("Failed to get item details!");
         });
-    }, [])
+    }, []);
 
     const navigate = useNavigate();
 
@@ -59,29 +59,42 @@ function Item(props) {
     }
 
     return <div className="item-main">
-        <ConfigProvider theme={props.theme}>
-        <Row>
-            <Col span={12}>
-                <Card className="item-img-card">
-                    <img className="item-main-image" src={dinosaur} width="100%"/>
-                </Card>
-            </Col>
-            <Col span={12}>
-                <div className="item-title">{item.title}</div>
-                <div className="item-price">${item.price}</div>
-                <div className="item-description">{item.description}</div>
-                {
-                    localStorage.getItem(ID_KEY) === `${item.seller_id}` ? 
-                    <Button className="item-button" type="primary">Edit</Button> :
-                    <Button 
-                        className="item-button" type="primary"
-                        loading={ordering} onClick={handleBuyNow} disabled={ordering}
-                    >Buy now!</Button>
-                }
-            </Col>
-        </Row>
-        </ConfigProvider>
-    </div>
+            <ConfigProvider theme={props.theme}>
+            {
+            item && Object.keys(item).length > 0 ?
+            <Row>
+                <Col span={12}>
+                    <Card className="item-img-card">
+                        <Image
+                            className="item-main-image" 
+                            src={item.image_urls[Object.keys(item.image_urls)[0]]} 
+                            width="100%"
+                            fallback={imgPlaceholder}
+                            preview={false}
+                        />
+                    </Card>
+                </Col>
+                <Col span={12}>
+                    <div className="item-title">{item.title}</div>
+                    <div className="item-price">${item.price}</div>
+                    <div className="item-description">{item.description}</div>
+                    {
+                        localStorage.getItem(ID_KEY) === `${item.seller_id}` ? 
+                        <Button className="item-button" type="primary">Edit</Button> :
+                        <Button 
+                            className="item-button" type="primary"
+                            loading={ordering} onClick={handleBuyNow} disabled={ordering}
+                        >Buy now!</Button>
+                    }
+                </Col>
+            </Row>
+            :
+            <Empty description="Item does not exist!">
+                <Button className="item-button" type="primary" href="/home">Home</Button>
+            </Empty>
+            }
+            </ConfigProvider>
+        </div>
 }
 
 export default Item

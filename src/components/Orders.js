@@ -1,9 +1,9 @@
-import { Button, ConfigProvider, Card, Row, Col, message } from "antd";
+import { Button, ConfigProvider, Card, Row, Col, message, Image } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL, BUCKET_NAME, TOKEN_KEY } from "../constants";
+import { BASE_URL, TOKEN_KEY } from "../constants";
 import { showTag } from "./Tag";
-import dinosaur from "../dinosaur.png"
+import imgPlaceholder from "../icons/image-outline-icon.svg"
 
 function Orders(props) {
     const [itemIDs, setItemIDs] = useState([])
@@ -144,7 +144,13 @@ function OrderCard(props) {
                 >Cancel</Button>
             </Col>
             <Col span={4} offset={12}>
-                <img className="order-card-image" src={dinosaur} width="120"/>
+                <Image 
+                    className="order-card-image"
+                    src={imgUrl}
+                    width="120"
+                    fallback={imgPlaceholder}
+                    preview={false}
+                    />
             </Col>
         </Row>
     </Card>

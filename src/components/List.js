@@ -2,7 +2,7 @@ import { Button, ConfigProvider, Card, Row, Col, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { BASE_URL, BUCKET_NAME, TOKEN_KEY, ITEM_STATUS } from "../constants";
+import { BASE_URL, TOKEN_KEY, ITEM_STATUS } from "../constants";
 import { showTag } from "./Tag";
 
 import soldIcon from "../icons/sold-icon.svg"
@@ -50,19 +50,24 @@ function List(props) {
         setItems(array => array.sort((item1, item2) => item1.id - item2.id))
     }, [itemIDs]) // Fetch item's details from backend
 
+    const deleteItem = (itemId) => {
+        setItemIDs(itemIDs.filter(id => id !== itemId))
+    };
+
     return <div className="list-main">
         <ConfigProvider theme={props.theme}>
             <span style={{ fontWeight: "bold", fontSize: "large" }}>My List</span>
             <Button type="primary" style={{ float: "right" }} href="/upload">New Item</Button>
             {
                 items.map( (item, index) => <ListCard
-                    id={item.id}
+                    itemId={item.id}
                     key={index}
                     title={item.title}
                     tag={item.tag}
                     price={item.price}
                     imgUrl={item.image_urls[Object.keys(item.image_urls)[0]]}
                     status={item.status}
+                    afterDelete={deleteItem}
                 />)
             }
         </ConfigProvider>
@@ -70,7 +75,33 @@ function List(props) {
 }
 
 function ListCard(props) {
-    const { id, title, tag, price, imgUrl, status } = props
+    const { itemId, title, tag, price, imgUrl, status, afterDelete } = props;
+    const [ deleting, setDeleting ] = useState(false);
+
+    const handleDelete = () => {
+        setDeleting(true)
+        const formData = new FormData();
+        formData.append("item_id", itemId);
+        const opt = {
+            method: "DELETE",
+            url: `${BASE_URL}/ditem`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+            },
+            data: formData
+        };
+        axios(opt).then((res) => {
+            if (res.status === 200) {
+                afterDelete(itemId)
+                setDeleting(false)
+            }
+        }).catch((err) => {
+            console.log("delete item failed: ", err.message);
+            message.error("Failed to delete item!");
+            setDeleting(false)
+        });
+    };
+
     return <Card style={{marginTop: "20px"}}>
         <Row>
             <Col span={4}>
@@ -86,11 +117,19 @@ function ListCard(props) {
                     <Button 
                         style={{marginTop: "5px", width: "100px"}} 
                         type="primary"
-                        href={`/item/${id}`}
+                        href={`/item/${itemId}`}
                         target="_blank"
                     >View</Button></>
                 }
-                <Button style={{marginTop: "5px", width: "100px"}} type="primary">Delete</Button>
+                <Button 
+                    style={{marginTop: "5px", width: "100px"}}
+                    type="primary"
+                    onClick={handleDelete}
+                    loading={deleting}
+                    disabled={deleting}
+                >
+                    Delete
+                </Button>
             </Col>
             <Col span={4} offset={13}>
                 <img className="list-card-image" src={imgUrl} width="120"/>

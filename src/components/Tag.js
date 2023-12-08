@@ -16,4 +16,9 @@ export const showTag = (tagId) => {
             Electronics
         </Tag>
     }
+    if (tagId === TAGS.Stationery) {
+        return <Tag color="green">
+            Stationery
+        </Tag>
+    }
 }

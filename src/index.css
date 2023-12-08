@@ -5,6 +5,7 @@
 @import "styles/Upload.css";
 @import "styles/Item.css";
 @import "styles/Order.css";
+@import "styles/Home.css";
 
 body {
   margin: 0;
