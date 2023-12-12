@@ -1,12 +1,12 @@
 import { useState, createRef } from "react";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
     Form, Upload as AntUpload, Row, Col, Input, Button, Select, message,
     ConfigProvider } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
 
-import { BASE_URL, TOKEN_KEY, TAGS, HOME_PAGE } from "../constants";
+import { BASE_URL, TOKEN_KEY, TAGS, ROOT_PATH } from "../constants";
 
 const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -74,7 +74,7 @@ function Upload(props) {
             if (res.status === 200) {
                 message.success("The item is added!");
                 setUploading(false);
-                navigate(`${HOME_PAGE}/list`)
+                navigate(`${ROOT_PATH}/list`)
             }
         }).catch((err) => {
             console.log("Add item failed: ", err.message);
@@ -157,8 +157,8 @@ function Upload(props) {
                     </Col>
                 </Row>
                 <Form.Item style={{ marginTop: "20px", float: "right" }}>
-                    <Button style={{ marginRight: "20px" }} href={`${HOME_PAGE}/list`}>
-                        Cancel
+                    <Button style={{ marginRight: "20px" }}>
+                        <Link to={`${ROOT_PATH}/list`}>Cancel</Link>
                     </Button>
                     <Button type="primary" htmlType="submit" loading={uploading} disabled={uploading}>
                         Submit

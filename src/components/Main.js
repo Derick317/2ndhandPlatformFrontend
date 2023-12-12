@@ -6,12 +6,12 @@ import { Home, SearchResult } from "./Home";
 import List from "./List"
 import Item from './Item';
 import imgPlaceholder from "../icons/image-outline-icon.svg"
-import { HOME_PAGE } from '../constants';
+import { ROOT_PATH } from '../constants';
 
 function Main(props) {
     const { theme, isLoggedIn, needLogin, logout, scrollWidth } = props;
     const loggedInOrHome = (obj) => {
-        return isLoggedIn ? obj : <Navigate to={`${HOME_PAGE}/home`}/>
+        return isLoggedIn ? obj : <Navigate to={`${ROOT_PATH}/home`}/>
     }
     const handleImgOnError = (event) => {
 		event.target.src = imgPlaceholder;
@@ -22,24 +22,24 @@ function Main(props) {
         <div className="main">
             <div className='main-content'>
             <Routes>
-                <Route path={`${HOME_PAGE}/`} exact element={home} />
-                <Route path={`${HOME_PAGE}/upload`} element={loggedInOrHome(<Upload theme={theme}/>)}/>
-                <Route path={`${HOME_PAGE}/list`} element={loggedInOrHome(<List 
+                <Route path={`${ROOT_PATH}/`} exact element={home} />
+                <Route path={`${ROOT_PATH}/upload`} element={loggedInOrHome(<Upload theme={theme}/>)}/>
+                <Route path={`${ROOT_PATH}/list`} element={loggedInOrHome(<List 
                     theme={theme}
                     imgOnError={handleImgOnError}
                     logout={logout}
                 />)}/> 
-                <Route path={`${HOME_PAGE}/orders`} element={loggedInOrHome(<Orders
+                <Route path={`${ROOT_PATH}/orders`} element={loggedInOrHome(<Orders
                     theme={theme}
                     imgOnError={handleImgOnError}
                     logout={logout}
                 />)}/>
-                <Route path={`${HOME_PAGE}/home`} element={home} />
-                <Route path={`${HOME_PAGE}/search`} element={<SearchResult
+                <Route path={`${ROOT_PATH}/home`} element={home} />
+                <Route path={`${ROOT_PATH}/search`} element={<SearchResult
                     scrollWidth={scrollWidth}
                     imgOnError={handleImgOnError}
                 />}/>
-                <Route path={`${HOME_PAGE}/item/:id`} element={<Item theme={theme} 
+                <Route path={`${ROOT_PATH}/item/:id`} element={<Item theme={theme} 
                     needLogin={needLogin}
                 />}/>
             </Routes>

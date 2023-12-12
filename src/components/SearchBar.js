@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input, Select, Space, ConfigProvider } from "antd";
-import { APP_NAME, HOME_PAGE, TAGS } from "../constants";
+import { APP_NAME, ROOT_PATH, TAGS } from "../constants";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar({theme}) {
@@ -23,8 +23,8 @@ function SearchBar({theme}) {
 
     const handleSearch = () => {
         setSearchText(arg => arg.trim())
-        navigate(searchText ? `${HOME_PAGE}/search?tag=${searchType}&keywords=${searchText}` :
-        `${HOME_PAGE}/search?tag=${searchType}`);
+        navigate(searchText ? `${ROOT_PATH}/search?tag=${searchType}&keywords=${searchText}` :
+        `${ROOT_PATH}/search?tag=${searchType}`);
     };
 
     return (

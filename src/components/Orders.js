@@ -1,9 +1,10 @@
 import { Button, ConfigProvider, Card, Row, Col, message, Statistic } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL, TOKEN_KEY, HOME_PAGE } from "../constants";
+import { BASE_URL, TOKEN_KEY, ROOT_PATH } from "../constants";
 import { showTag } from "./Tag";
 import expiredIcon from "../icons/expire-icon.svg"
+import { Link } from "react-router-dom";
 
 function Orders(props) {
     const [itemIDs, setItemIDs] = useState({})
@@ -62,7 +63,9 @@ function Orders(props) {
         <ConfigProvider theme={props.theme}>
             {
                 itemIDs.length === 0 ? <>
-                    <Button type="primary" href={`${HOME_PAGE}/`}>Home</Button>
+                    <Button type="primary" >
+                        <Link to={`${ROOT_PATH}/`}>Home</Link>
+                    </Button>
                     <div style={{ marginTop: "15px" }}>No orders. Go to homepage to search!</div>
                 </> : items.map( (item, index) => <OrderCard
                     key={index}

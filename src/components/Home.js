@@ -1,9 +1,9 @@
 import { Card, Row, Col, message } from "antd";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-import { BASE_URL, HOME_PAGE, TAGS } from "../constants";
+import { BASE_URL, ROOT_PATH, TAGS } from "../constants";
 import { showTag } from "./Tag";
 
 const cardWidthPx = 300
@@ -125,24 +125,23 @@ function HomeBase(props) {
 function HomeCard(props) {
     const { itemId, title, tag, price, imgUrl, imgOnError } = props;
     return <Card
-        title={<a 
+        title={<Link
             style={{fontSize: "large", color: "black"}} 
-            href={`${HOME_PAGE}/item/${itemId}`}
+            to={`${ROOT_PATH}/item/${itemId}`}
             target="_blank"
-            rel="noreferrer"
+            // rel="noreferrer"
             >
                 {title}
-            </a>}
+            </Link>}
         bordered={false}
         style={{ width: `${cardWidthPx}px`, margin: "auto" }}
-        href={`${HOME_PAGE}/item/${itemId}`}
         bodyStyle={{padding: 0, paddingBottom: "16px"}}
     >
-        <a 
+        <Link
         style={{color: "black"}} 
-        href={`/item/${itemId}`}
+        to={`${ROOT_PATH}/item/${itemId}`}
         target="_blank"
-        rel="noreferrer"
+        // rel="noreferrer"
         >
             <img
                 src={imgUrl} 
@@ -157,6 +156,6 @@ function HomeCard(props) {
                 ${price}
                 <span style={{float: "right", paddingRight: "16px"}}>{showTag(tag)}</span>
             </span>
-        </a>
+        </Link>
     </Card>
 }

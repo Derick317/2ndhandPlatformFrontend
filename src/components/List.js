@@ -2,10 +2,11 @@ import { Button, ConfigProvider, Card, Row, Col, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { BASE_URL, TOKEN_KEY, ITEM_STATUS, HOME_PAGE } from "../constants";
+import { BASE_URL, TOKEN_KEY, ITEM_STATUS, ROOT_PATH } from "../constants";
 import { showTag } from "./Tag";
 
 import soldIcon from "../icons/sold-icon.svg"
+import { Link } from "react-router-dom";
 
 function List(props) {
     const [itemIDs, setItemIDs] = useState([])
@@ -63,8 +64,8 @@ function List(props) {
     return <div className="list-main">
         <ConfigProvider theme={props.theme}>
             <span style={{ fontWeight: "bold", fontSize: "large" }}>My List</span>
-            <Button type="primary" style={{ float: "right" }} href={`${HOME_PAGE}/upload`}>
-                New Item
+            <Button type="primary" style={{ float: "right" }}>
+                <Link to={`${ROOT_PATH}/upload`}>New Item</Link>
             </Button>
             {
                 items.map( (item, index) => <ListCard
@@ -124,12 +125,10 @@ function ListCard(props) {
                     status === ITEM_STATUS.Sold ? 
                     <img src={soldIcon} style={{width: "max(70%, 100px)"}} alt=""/> : 
                     <><Button style={{width: "100px"}} type="primary">Edit</Button>
-                    <Button 
-                        style={{marginTop: "5px", width: "100px"}} 
-                        type="primary"
-                        href={`${HOME_PAGE}/item/${itemId}`}
-                        target="_blank"
-                    >View</Button></>
+                    <Button style={{marginTop: "5px", width: "100px"}} type="primary">
+                        <Link to={`${ROOT_PATH}/item/${itemId}`} target="_blank">View</Link>
+                    </Button>
+                    </>
                 }
                 <Button 
                     style={{marginTop: "5px", width: "100px"}}

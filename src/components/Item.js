@@ -1,10 +1,10 @@
 import { Button, ConfigProvider, Card, Row, Col, message, Image, Empty } from "antd";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import imgPlaceholder from "../icons/image-outline-icon.svg"
 
-import { BASE_URL, HOME_PAGE, ID_KEY, TOKEN_KEY } from "../constants";
+import { BASE_URL, ROOT_PATH, ID_KEY, TOKEN_KEY } from "../constants";
 function Item(props) {
     const params = useParams()
     const [item, setItem] = useState({})
@@ -92,8 +92,8 @@ function Item(props) {
             </Row>
             :
             <Empty description="Item does not exist!">
-                <Button className="item-button" type="primary" href={`${HOME_PAGE}/home`}>
-                    Home
+                <Button className="item-button" type="primary">
+                    <Link to={`${ROOT_PATH}/home`}>Home</Link>
                 </Button>
             </Empty>
             }
