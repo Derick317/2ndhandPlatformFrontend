@@ -2,7 +2,7 @@ import { Button, ConfigProvider, Card, Row, Col, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import { BASE_URL, TOKEN_KEY, ITEM_STATUS } from "../constants";
+import { BASE_URL, TOKEN_KEY, ITEM_STATUS, HOME_PAGE } from "../constants";
 import { showTag } from "./Tag";
 
 import soldIcon from "../icons/sold-icon.svg"
@@ -63,7 +63,9 @@ function List(props) {
     return <div className="list-main">
         <ConfigProvider theme={props.theme}>
             <span style={{ fontWeight: "bold", fontSize: "large" }}>My List</span>
-            <Button type="primary" style={{ float: "right" }} href="/upload">New Item</Button>
+            <Button type="primary" style={{ float: "right" }} href={`${HOME_PAGE}/upload`}>
+                New Item
+            </Button>
             {
                 items.map( (item, index) => <ListCard
                     itemId={item.id}
@@ -125,7 +127,7 @@ function ListCard(props) {
                     <Button 
                         style={{marginTop: "5px", width: "100px"}} 
                         type="primary"
-                        href={`/item/${itemId}`}
+                        href={`${HOME_PAGE}/item/${itemId}`}
                         target="_blank"
                     >View</Button></>
                 }

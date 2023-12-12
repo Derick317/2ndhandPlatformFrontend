@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import imgPlaceholder from "../icons/image-outline-icon.svg"
 
-import { BASE_URL, ID_KEY, TOKEN_KEY } from "../constants";
+import { BASE_URL, HOME_PAGE, ID_KEY, TOKEN_KEY } from "../constants";
 function Item(props) {
     const params = useParams()
     const [item, setItem] = useState({})
@@ -46,7 +46,7 @@ function Item(props) {
             if (res.status === 200) {
                 message.success("Added a new order!");
                 setOrdering(false);
-                navigate("/orders")
+                navigate(`/orders`)
             }
         }).catch((err) => {
             if ("response" in err && err.response.status === 401) {
@@ -92,7 +92,9 @@ function Item(props) {
             </Row>
             :
             <Empty description="Item does not exist!">
-                <Button className="item-button" type="primary" href="/home">Home</Button>
+                <Button className="item-button" type="primary" href={`${HOME_PAGE}/home`}>
+                    Home
+                </Button>
             </Empty>
             }
             </ConfigProvider>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-import { BASE_URL, TAGS } from "../constants";
+import { BASE_URL, HOME_PAGE, TAGS } from "../constants";
 import { showTag } from "./Tag";
 
 const cardWidthPx = 300
@@ -127,7 +127,7 @@ function HomeCard(props) {
     return <Card
         title={<a 
             style={{fontSize: "large", color: "black"}} 
-            href={`/item/${itemId}`}
+            href={`${HOME_PAGE}/item/${itemId}`}
             target="_blank"
             rel="noreferrer"
             >
@@ -135,7 +135,7 @@ function HomeCard(props) {
             </a>}
         bordered={false}
         style={{ width: `${cardWidthPx}px`, margin: "auto" }}
-        href={`/item/${itemId}`}
+        href={`${HOME_PAGE}/item/${itemId}`}
         bodyStyle={{padding: 0, paddingBottom: "16px"}}
     >
         <a 

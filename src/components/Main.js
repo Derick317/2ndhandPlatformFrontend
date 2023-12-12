@@ -6,11 +6,12 @@ import { Home, SearchResult } from "./Home";
 import List from "./List"
 import Item from './Item';
 import imgPlaceholder from "../icons/image-outline-icon.svg"
+import { HOME_PAGE } from '../constants';
 
 function Main(props) {
     const { theme, isLoggedIn, needLogin, logout, scrollWidth } = props;
     const loggedInOrHome = (obj) => {
-        return isLoggedIn ? obj : <Navigate to='/home'/>
+        return isLoggedIn ? obj : <Navigate to={`${HOME_PAGE}/home`}/>
     }
     const handleImgOnError = (event) => {
 		event.target.src = imgPlaceholder;
@@ -21,24 +22,26 @@ function Main(props) {
         <div className="main">
             <div className='main-content'>
             <Routes>
-                <Route path="/" exact element={home} />
-                <Route path="/upload" element={loggedInOrHome(<Upload theme={theme}/>)}/>
-                <Route path="/list" element={loggedInOrHome(<List 
+                <Route path={`${HOME_PAGE}/`} exact element={home} />
+                <Route path={`${HOME_PAGE}/upload`} element={loggedInOrHome(<Upload theme={theme}/>)}/>
+                <Route path={`${HOME_PAGE}/list`} element={loggedInOrHome(<List 
                     theme={theme}
                     imgOnError={handleImgOnError}
                     logout={logout}
                 />)}/> 
-                <Route path="/orders" element={loggedInOrHome(<Orders
+                <Route path={`${HOME_PAGE}/orders`} element={loggedInOrHome(<Orders
                     theme={theme}
                     imgOnError={handleImgOnError}
                     logout={logout}
                 />)}/>
-                <Route path="/home" element={home} />
-                <Route path="/search" element={<SearchResult
+                <Route path={`${HOME_PAGE}/home`} element={home} />
+                <Route path={`${HOME_PAGE}/search`} element={<SearchResult
                     scrollWidth={scrollWidth}
                     imgOnError={handleImgOnError}
                 />}/>
-                <Route path="/item/:id" element={<Item theme={theme} needLogin={needLogin}/>}/>
+                <Route path={`${HOME_PAGE}/item/:id`} element={<Item theme={theme} 
+                    needLogin={needLogin}
+                />}/>
             </Routes>
             </div>
             <footer className='footer'>

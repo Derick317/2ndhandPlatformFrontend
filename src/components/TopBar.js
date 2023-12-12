@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 
 import { UserOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
-import { APP_NAME } from '../constants';
+import { APP_NAME, HOME_PAGE } from '../constants';
 
 function TopBar(props) {
     const { theme, isLoggedIn, userName, setOpenLoginModal, handleLogout } = props;
@@ -13,12 +13,12 @@ function TopBar(props) {
     const items = [
         {
             label: (
-                <a href='/list'>My List</a>
+                <a href={`${HOME_PAGE}/list`}>My List</a>
             ),
         },
         {
             label: (
-                <a href='/orders'>My Orders</a>
+                <a href={`${HOME_PAGE}/orders`}>My Orders</a>
             ),
         },
         {
@@ -30,10 +30,10 @@ function TopBar(props) {
     return (
         <>
             <header className="App-header">
-                <Link to="/home">
+                <Link to={`${HOME_PAGE}/home`}>
                     <img src={logo} className="App-logo" alt="logo"/>
                 </Link>
-                <Link className="App-title" to='/home'>{APP_NAME}</Link>
+                <Link className="App-title" to={`${HOME_PAGE}/home`}>{APP_NAME}</Link>
                 <SearchBar theme={theme}></SearchBar>
                 {
                     isLoggedIn ?

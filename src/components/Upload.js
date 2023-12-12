@@ -6,7 +6,7 @@ import {
 import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
 
-import { BASE_URL, TOKEN_KEY, TAGS } from "../constants";
+import { BASE_URL, TOKEN_KEY, TAGS, HOME_PAGE } from "../constants";
 
 const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -74,7 +74,7 @@ function Upload(props) {
             if (res.status === 200) {
                 message.success("The item is added!");
                 setUploading(false);
-                navigate("/list")
+                navigate(`${HOME_PAGE}/list`)
             }
         }).catch((err) => {
             console.log("Add item failed: ", err.message);
@@ -157,7 +157,7 @@ function Upload(props) {
                     </Col>
                 </Row>
                 <Form.Item style={{ marginTop: "20px", float: "right" }}>
-                    <Button style={{ marginRight: "20px" }} href="/list">
+                    <Button style={{ marginRight: "20px" }} href={`${HOME_PAGE}/list`}>
                         Cancel
                     </Button>
                     <Button type="primary" htmlType="submit" loading={uploading} disabled={uploading}>
