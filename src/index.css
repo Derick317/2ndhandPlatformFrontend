@@ -20,3 +20,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  --header-height: 45px;
+  --footer-height: 40px;
+  --font-size: 18px;
+  --color-primary: #EBC061;
+  --background-primary: #3E6C2E;
+  --margin-side: 50px
+}

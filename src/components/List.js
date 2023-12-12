@@ -25,8 +25,13 @@ function List(props) {
                 setItemIDs(data.sort().reverse())
             }
         }).catch((err) => {
-            console.log("query list failed: ", err.message);
-            message.error("Failed to show list!");
+            console.log(err)
+            if ("response" in err && err.response.status === 401) {
+                props.logout()
+            } else {
+                console.log("query list failed: ", err.message);
+                message.error("Failed to show list!");
+            }
         });
     }, []) // Fetch items in the list from backend
 
@@ -65,9 +70,11 @@ function List(props) {
                     title={item.title}
                     tag={item.tag}
                     price={item.price}
-                    imgUrl={item.image_urls[Object.keys(item.image_urls)[0]]}
+                    imgUrl={item.image_urls && Object.keys(item.image_urls).length > 0 ? 
+                        item.image_urls[Object.keys(item.image_urls)[0]] : ""}
                     status={item.status}
                     afterDelete={deleteItem}
+                    imgOnError={props.imgOnError}
                 />)
             }
         </ConfigProvider>
@@ -75,7 +82,7 @@ function List(props) {
 }
 
 function ListCard(props) {
-    const { itemId, title, tag, price, imgUrl, status, afterDelete } = props;
+    const { itemId, title, tag, price, imgUrl, status, afterDelete, imgOnError } = props;
     const [ deleting, setDeleting ] = useState(false);
 
     const handleDelete = () => {
@@ -112,7 +119,7 @@ function ListCard(props) {
             <Col span={3}>
                 {
                     status === ITEM_STATUS.Sold ? 
-                    <img src={soldIcon} style={{width: "max(70%, 100px)"}}/> : 
+                    <img src={soldIcon} style={{width: "max(70%, 100px)"}} alt=""/> : 
                     <><Button style={{width: "100px"}} type="primary">Edit</Button>
                     <Button 
                         style={{marginTop: "5px", width: "100px"}} 
@@ -132,7 +139,13 @@ function ListCard(props) {
                 </Button>
             </Col>
             <Col span={4} offset={13}>
-                <img className="list-card-image" src={imgUrl} width="120"/>
+                <img 
+                    className="list-card-image"
+                    src={imgUrl}
+                    width="120px"
+                    onError={imgOnError}
+                    alt=""
+                />
             </Col>
         </Row>
     </Card>

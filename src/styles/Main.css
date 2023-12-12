@@ -1,3 +1,17 @@
 .main {
-    margin-top: 40px;
+    padding-top: 40px;
+}
+
+.main-content {
+    min-height: calc(100vh - var(--footer-height) - 50px - var(--header-height));
+}
+
+.footer {
+    height: var(--footer-height);
+    width: calc(100% - 2 * var(--margin-side));
+    background-color: var(--background-primary);
+    padding-left: var(--margin-side);
+    padding-right: var(--margin-side);
+    padding-top: 10px;
+    color: white;
 }

@@ -2,9 +2,8 @@ import { useState, createRef } from "react";
 import { useNavigate } from 'react-router-dom'
 import {
     Form, Upload as AntUpload, Row, Col, Input, Button, Select, message,
-    ConfigProvider, Modal
-} from "antd";
-import { InboxOutlined, PlusOutlined } from '@ant-design/icons';
+    ConfigProvider } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
 
 import { BASE_URL, TOKEN_KEY, TAGS } from "../constants";
@@ -29,46 +28,30 @@ function Upload(props) {
         ({ 'value': TAGS[item], 'label': item }));
     const [imageList, setImageList] = useState([]);
     const [uploading, setUploading] = useState(false);
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
     const formRef = createRef();
 
     const navigate = useNavigate();
-
-    const handleChange = ({ file: newFile }) => {
-        const isJpgOrPng = newFile.type === 'image/jpeg' || newFile.type === 'image/png';
-        if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
-        }
-        const isLt2M = newFile.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        if (isLt2M && isJpgOrPng) {
-            setImageList([...imageList, newFile]);
-        }
-    };
 
     const beforeImageUpload = (file) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
+            return false || AntUpload.LIST_IGNORE;
         }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
+        const isLt1M = file.size / 1024 / 1024 < 1;
+        if (!isLt1M) {
+            message.error('Image must smaller than 1 MB!');
+            return false || AntUpload.LIST_IGNORE;
         }
-        return false || Upload.LIST_IGNORE;
+        setImageList([...imageList, file]);
+        return false;
     }
 
-    const handlePreview = async (file) => {
-        setPreviewImage(file.url || file.thumbUrl);
-        setPreviewOpen(true);
-        setPreviewTitle(file.name);
-    };
-
     const onUploadFinish = (values) => {
+        if (imageList.length < 1) {
+            message.error("Please choose an image!")
+            return
+        }
         setUploading(true);
         const formData = new FormData();
         delete values.images;
@@ -110,6 +93,8 @@ function Upload(props) {
                 disabled={uploading}>
                 <Row>
                     <Col span={8}>
+                        <div>Upload a JPG/PNG image (less than 1 MB)</div>
+                        <div>4:3 is the best frame:</div>
                         <Form.Item
                             name="images"
                             valuePropName="fileList"
@@ -118,11 +103,10 @@ function Upload(props) {
                         >
                             <AntUpload
                                 listType="picture-card"
-                                // fileList={imageList}
-                                onPreview={handlePreview}
-                                onChange={handleChange}
+                                showUploadList={{showPreviewIcon: false}}
+                                onRemove={() => {setImageList([])}}
                                 disabled={uploading}
-                                beforeUpload={() => false}
+                                beforeUpload={beforeImageUpload}
                             >
                                 {imageList.length >= 1 ? null : uploadButton}
                             </AntUpload>
@@ -181,15 +165,6 @@ function Upload(props) {
                     </Button>
                 </Form.Item>
             </Form>
-            <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={() => setPreviewOpen(false)}>
-                <img
-                    alt="example"
-                    style={{
-                        width: '100%',
-                    }}
-                    src={previewImage}
-                />
-            </Modal>
         </ConfigProvider>
     </div>
 }

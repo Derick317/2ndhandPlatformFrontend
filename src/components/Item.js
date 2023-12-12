@@ -48,7 +48,7 @@ function Item(props) {
                 navigate("/orders")
             }
         }).catch((err) => {
-            if (err.response.status === 401) {
+            if ("response" in err && err.response.status === 401) {
                 props.needLogin()
             } else {
                 console.log("Fail to order: ", err.message);
@@ -67,7 +67,8 @@ function Item(props) {
                     <Card className="item-img-card">
                         <Image
                             className="item-main-image" 
-                            src={item.image_urls[Object.keys(item.image_urls)[0]]} 
+                            src={item.image_urls && Object.keys(item.image_urls).length > 0 ? 
+                                item.image_urls[Object.keys(item.image_urls)[0]] : ""} 
                             width="100%"
                             fallback={imgPlaceholder}
                             preview={false}

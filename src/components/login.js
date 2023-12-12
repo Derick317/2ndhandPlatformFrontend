@@ -8,8 +8,10 @@ import { BASE_URL, APP_NAME } from "../constants";
 function LoginModal(props) {
     const [login, setLogin] = React.useState(true); // sign in or sign up
     const [passwordMatch, setPasswordMatch] = React.useState(true)
+    const [signing, setSigning] = React.useState(false)
 
     const onLoginFinish = (values) => {
+        setSigning(true)
         const { email, password } = values;
         const opt = {
             method: "POST",
@@ -27,18 +29,21 @@ function LoginModal(props) {
                     props.handleLoggedIn(data.token, data.username, data.id);
                     message.success("Login succeed! ");
                     props.setOpen(false)
+                    setSigning(false)
                 }
             })
             .catch((err) => {
-                if (err.response.status === 401) {
+                if ("response" in err && err.response.status === 401) {
                     message.error("Incorrect username or password!");
                 } else {
                     message.error("Sign in failed!");
                 }
+                setSigning(false)
             });
     };
 
     const onSignupFinish = (values) => {
+        setSigning(true)
         const { username, email, password, reEnterPassword } = values;
         if (reEnterPassword !== password) {
             setPasswordMatch(false);
@@ -59,6 +64,7 @@ function LoginModal(props) {
                 if (res.status === 200) {
                     message.success("Sign up succeed!");
                     setLogin(true)
+                    setSigning(false)
                 }
             })
             .catch((err) => {
@@ -67,6 +73,7 @@ function LoginModal(props) {
                 } else {
                     message.error("Sign up failed!");
                 }
+                setSigning(false)
             });
     };
 
@@ -75,6 +82,7 @@ function LoginModal(props) {
             className="login-form"
             onFinish={onLoginFinish}
             layout="vertical"
+            disabled={signing}
         >
             <Form.Item
                 label="Email"
@@ -104,11 +112,19 @@ function LoginModal(props) {
                 />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" 
+                    className="login-form-button" loading={signing}
+                >
                     Sign in
                 </Button>
-                &ensp;or&ensp;
-                <span className="login-link" onClick={() => setLogin(false)}>sign up now</span>
+                {
+                    signing ? null : <>
+                        &ensp;or&ensp;
+                        <span className="login-link" onClick={() => setLogin(false)}>
+                            sign up now
+                        </span>
+                    </>
+                }
             </Form.Item>
         </Form>
     )
@@ -172,7 +188,9 @@ function LoginModal(props) {
                 />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" 
+                    className="login-form-button" loading={signing}                
+                >
                     Sign up
                 </Button>
                 &ensp;Already have an account?&ensp;

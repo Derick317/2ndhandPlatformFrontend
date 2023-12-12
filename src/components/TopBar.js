@@ -8,7 +8,7 @@ import { Dropdown } from 'antd';
 import { APP_NAME } from '../constants';
 
 function TopBar(props) {
-    const { theme, isLoggedIn, userName, setOpenLoginModal, handleLogout, setItemIDs } = props;
+    const { theme, isLoggedIn, userName, setOpenLoginModal, handleLogout } = props;
     
     const items = [
         {
@@ -34,7 +34,7 @@ function TopBar(props) {
                     <img src={logo} className="App-logo" alt="logo"/>
                 </Link>
                 <Link className="App-title" to='/home'>{APP_NAME}</Link>
-                <SearchBar theme={theme} setItemIDs={setItemIDs}></SearchBar>
+                <SearchBar theme={theme}></SearchBar>
                 {
                     isLoggedIn ?
                         <Dropdown

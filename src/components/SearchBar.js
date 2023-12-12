@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Button, Input, Select, Space, ConfigProvider, message } from "antd";
-import axios from "axios";
-import { BASE_URL, APP_NAME, TAGS } from "../constants";
+import React, { useState } from "react";
+import { Button, Input, Select, Space, ConfigProvider } from "antd";
+import { APP_NAME, TAGS } from "../constants";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar({theme, setItemIDs}) {
+function SearchBar({theme}) {
     const search_tags = {All: 0, ...TAGS}
     const [searchType, setSearchType] = useState(search_tags.All);
     const [searchText, setSearchText] = useState("")
-    const [searching, setSearching] = useState(false)
 
     const select_option = Object.keys(search_tags).map(item => 
         ({'value': search_tags[item], 'label': item}));
@@ -24,6 +22,7 @@ function SearchBar({theme, setItemIDs}) {
     const navigate = useNavigate();
 
     const handleSearch = () => {
+        setSearchText(arg => arg.trim())
         navigate(searchText ? `/search?tag=${searchType}&keywords=${searchText}` :
         `/search?tag=${searchType}`);
     };
@@ -37,9 +36,7 @@ function SearchBar({theme, setItemIDs}) {
                 <Input placeholder={`Search ${APP_NAME}`} maxLength={30} 
                     value={searchText} onChange={changeSearchText}
                 />
-                <Button type="primary" onClick={handleSearch}
-                    loading={searching} disabled={searching}
-                >Search</Button>
+                <Button type="primary" onClick={handleSearch}>Search</Button>
             </Space.Compact>
         </ConfigProvider>
     );

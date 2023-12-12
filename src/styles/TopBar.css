@@ -1,14 +1,8 @@
-:root {
-  --header-height: 45px;
-  --font-size: 18px;
-  --color-primary: #EBC061;
-}
-
 .App-header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #3E6C2E;
+  background-color: var(--background-primary);
   color: white;
   height: var(--header-height);
 }

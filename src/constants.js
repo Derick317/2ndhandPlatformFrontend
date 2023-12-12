@@ -1,7 +1,7 @@
 export const TOKEN_KEY = 'token';
 export const USERNAME_KEY = 'username'
 export const ID_KEY = 'id'
-export const BASE_URL = 'http://localhost:8080'
+export const BASE_URL = 'https://second-hand-platform.uc.r.appspot.com'
 export const TAGS = {
     All: 0,
     Books: 1,

@@ -59,6 +59,7 @@ function App() {
         theme={theme}
         isLoggedIn={isLoggedIn}
         needLogin={needLogin}
+        logout={logout}
         scrollWidth={scrollWidth}
       />
       <LoginModal
