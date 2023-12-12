@@ -33,6 +33,7 @@ function List(props) {
                 message.error("Failed to show list!");
             }
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) // Fetch items in the list from backend
 
     useEffect(() => {

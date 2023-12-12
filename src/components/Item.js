@@ -25,6 +25,7 @@ function Item(props) {
             console.log("query item failed: ", err.message);
             message.error("Failed to get item details!");
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const navigate = useNavigate();

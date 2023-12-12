@@ -12,7 +12,7 @@ const cardSpacePx = 50
 
 export const SearchResult = (props) => {
     const [ homeItemIDs, setHomeItemIDs ] = useState([]);
-    const [ searchParams, _] = useSearchParams();
+    const searchParams = useSearchParams()[0];
     useEffect(() => {
         const keywords = searchParams.get("keywords");
         const opt = {

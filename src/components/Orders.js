@@ -34,6 +34,7 @@ function Orders(props) {
                 message.error("Failed to show orders!");
             }
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []) // Fetch ids of items in the order from backend
 
     useEffect(() => {
@@ -92,6 +93,7 @@ function OrderCard(props) {
         if (remainTime < 0) {
             setExpired(true)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleCancel = () => {
