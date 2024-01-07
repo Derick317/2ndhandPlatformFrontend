@@ -99,7 +99,6 @@ function HomeBase(props) {
         {
             [...new Array(colsInRow).keys()].map((cIdx) => {
                 const idx = rIdx * colsInRow + cIdx;
-                console.log(items[idx])
                 return <Col flex={1} key={cIdx}>
                 {
                     idx >= items.length ? 
@@ -148,7 +147,7 @@ function HomeCard(props) {
                 width={`${cardWidthPx}px`}
                 height={`${3 * cardWidthPx / 4}px`}
                 onError={imgOnError}
-                preview={false}
+                // preview={false}
                 style={{paddingBottom: "10px"}}
                 alt=""
             />

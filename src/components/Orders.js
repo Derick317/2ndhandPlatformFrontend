@@ -1,4 +1,5 @@
-import { Button, ConfigProvider, Card, Row, Col, message, Statistic } from "antd";
+import { Button, ConfigProvider, Card, Row, Col, message, Statistic, Tooltip } from "antd";
+import { QuestionCircleFilled } from '@ant-design/icons';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL, TOKEN_KEY, ROOT_PATH } from "../constants";
@@ -62,7 +63,16 @@ function Orders(props) {
     return <div className="orders-main">
         <ConfigProvider theme={props.theme}>
             {
-                itemIDs.length === 0 ? <>
+                Object.keys(itemIDs).length === 0 ? null 
+                : <>
+                    <span style={{ fontWeight: "bold", fontSize: "large" }}>My List</span>
+                    <Tooltip title="Please do not just buy items. At least add some. Thank you!">
+                        &nbsp;<QuestionCircleFilled />
+                    </Tooltip>
+                </>
+            }
+            {
+                Object.keys(itemIDs).length === 0 ? <>
                     <Button type="primary" >
                         <Link to={`${ROOT_PATH}/`}>Home</Link>
                     </Button>
@@ -73,7 +83,7 @@ function Orders(props) {
                     title={item.title}
                     tag={item.tag}
                     price={item.price}
-                    imgUrl={item.image_urls && Object.keys(item.image_urls).length > 0 ? 
+                    imgUrl={(item.image_urls && Object.keys(item.image_urls).length > 0) ? 
                         item.image_urls[Object.keys(item.image_urls)[0]] : ""}
                     removeOrder={removeOrder}
                     imgOnError={props.imgOnError}
@@ -151,7 +161,7 @@ function OrderCard(props) {
 
     return <Card style={{marginTop: "20px"}}>
         <Row>
-            <Col span={4}>
+            <Col span={5}>
                 <div className="order-card-title">{title}</div>
                 { showTag(tag) }
                 <div className="order-card-price">${price}</div>
@@ -184,14 +194,13 @@ function OrderCard(props) {
                 }
                 </div>
             </Col>
-            <Col span={12}>
+            <Col span={11}>
                 <img
                     className="order-card-image"
                     src={imgUrl}
                     alt=""
                     width="150px"
                     onError={imgOnError}
-                    preview={false}
                 />
             </Col>
         </Row>

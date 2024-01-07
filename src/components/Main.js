@@ -45,7 +45,7 @@ function Main(props) {
             </Routes>
             </div>
             <footer className='footer'>
-                Copyright &copy; 2023, 陈德铭 &emsp;
+                Copyright &copy; 2024, 陈德铭 &emsp;
                 <a
                     href='https://derick317.github.io'
                     style={{textDecoration: "none", color: "inherit"}}

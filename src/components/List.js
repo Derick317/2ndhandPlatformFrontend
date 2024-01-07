@@ -115,7 +115,7 @@ function ListCard(props) {
 
     return <Card style={{marginTop: "20px"}}>
         <Row>
-            <Col span={4}>
+            <Col span={5}>
                 <div className="list-card-title">{title}</div>
                 { showTag(tag) }
                 <div className="list-card-price">${price}</div>
@@ -140,7 +140,7 @@ function ListCard(props) {
                     Delete
                 </Button>
             </Col>
-            <Col span={4} offset={13}>
+            <Col span={4} offset={12}>
                 <img 
                     className="list-card-image"
                     src={imgUrl}

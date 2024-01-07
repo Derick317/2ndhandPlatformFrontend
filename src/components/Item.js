@@ -72,7 +72,7 @@ function Item(props) {
                                 item.image_urls[Object.keys(item.image_urls)[0]] : ""} 
                             width="100%"
                             fallback={imgPlaceholder}
-                            preview={false}
+                            // preview={false}
                         />
                     </Card>
                 </Col>
